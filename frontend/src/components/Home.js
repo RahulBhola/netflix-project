@@ -5,6 +5,7 @@ import { BsHandThumbsUp } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { FaPlay } from "react-icons/fa";
 import { PiCircleDuotone } from "react-icons/pi";
+import RandomVideo from './RandomVideo';
 
 function Home() {
     const [images, setImages] = useState([]);
@@ -43,10 +44,6 @@ function Home() {
             }
         };
 
-        fetchImages();
-    }, []);
-
-    useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Escape') {
                 videoRef.current.forEach(video => {
@@ -67,64 +64,61 @@ function Home() {
             }
         };
 
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, []);
-
-    useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                console.log("Clicked outside dropdown, closing it.");
                 setDropdownOpen(false);
+            } else {
+                console.log("Clicked inside dropdown.");
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    useEffect(() => {
         // Set default season if available
         if (seasons.length > 0) {
             setSelectedSeason(seasons[0]); // Select the first season by default
         }
+
+        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        document.addEventListener('mousedown', handleClickOutside);
+
+        fetchImages();
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
     }, [seasons]);
 
     const openImageOverlay = async (image) => {
-    setSelectedImage(image);
-    try {
-        const response = await fetch(`http://localhost:3000/auth/getSeriesDetails/${image._id}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch series details');
-        }
-        const seriesData = await response.json();
-        setSeriesData(seriesData);
-        
-        // Set seasons and default to the first season
-        setSeasons(seriesData.seasons);
-        const defaultSeason = seriesData.seasons[0]; // Assuming the first season should be default
-        setSelectedSeason(defaultSeason);
+        setSelectedImage(image);
+        try {
+            const response = await fetch(`http://localhost:3000/auth/getSeriesDetails/${image._id}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch series details');
+            }
+            const seriesData = await response.json();
+            setSeriesData(seriesData);
+            
+            // Set seasons and default to the first season
+            setSeasons(seriesData.seasons);
+            const defaultSeason = seriesData.seasons[0]; // Assuming the first season should be default
+            setSelectedSeason(defaultSeason);
 
-        // Fetch episodes for the default season
-        const episodesResponse = await fetch(`http://localhost:3000/auth/getEpisodes/${defaultSeason._id}`);
-        if (!episodesResponse.ok) {
-            throw new Error('Failed to fetch episodes');
+            // Fetch episodes for the default season
+            const episodesResponse = await fetch(`http://localhost:3000/auth/getEpisodes/${defaultSeason._id}`);
+            if (!episodesResponse.ok) {
+                throw new Error('Failed to fetch episodes');
+            }
+            const episodesData = await episodesResponse.json();
+            setEpisodes(episodesData);
+            
+        } catch (error) {
+            console.error('Error fetching series details:', error);
         }
-        const episodesData = await episodesResponse.json();
-        setEpisodes(episodesData);
-        
-    } catch (error) {
-        console.error('Error fetching series details:', error);
-    }
-    setImageOverlayOpen(true);
-};
+        setImageOverlayOpen(true);
+    };
 
 
     const closeImageOverlay = () => {
@@ -135,6 +129,7 @@ function Home() {
         setEpisodes([]);
         setIsPlaying(false);
         setSelectedSeason(null); // Reset selected season to null
+        setDropdownOpen(false);
     };
 
     const toggleDropdown = () => {
@@ -191,7 +186,8 @@ function Home() {
     return (
         <div>
             <Header />
-            <div className="container mx-auto py-8 bg-zinc-800">
+            <RandomVideo />
+            <div className="container mx-auto pb-8 bg-zinc-800">
                 <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                     {images.map((image, index) => (
                         <div key={index} className="p-4 shadow-md rounded-lg bg-black cursor-pointer" onClick={() => openImageOverlay(image)}>
