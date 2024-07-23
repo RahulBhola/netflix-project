@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Series = require('../models/Series'); 
+const Movies = require('../models/Movies');
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
@@ -75,6 +76,34 @@ router.post('/series', upload.any(), async (req, res) => {
   } catch (error) {
     console.error('Error saving series and episodes:', error);
     res.status(500).send('Error saving series and episodes.');
+  }
+});
+
+// POST endpoint to save movies data
+router.post('/movie', upload.any(), async (req, res) => {
+  try {
+    const { movieName, movieDetails, movieCast, movieCreators } = req.body;
+
+    const picture = req.files.find(file => file.fieldname === 'picture')?.path;
+    const movieVideo = req.files.find(file => file.fieldname === 'movieVideo')?.path;
+    const movieVideoPoster = req.files.find(file => file.fieldname === 'movieVideoPoster')?.path;
+
+    const newMovie = new Movies({
+      movieName,
+      movieDetails,
+      movieCast,
+      movieCreators,
+      picture,
+      movieVideo,
+      movieVideoPoster
+    });
+
+    await newMovie.save();
+
+    res.status(201).send('movie data is saved successfully.');
+  } catch (error) {
+    console.error('Error saving movie data:', error);
+    res.status(500).send('Error saving movie data.');
   }
 });
 
@@ -156,6 +185,23 @@ router.get('/getAllImages', async (req, res) => {
   }
 });
 
+// Endpoint to fetch all movie images
+router.get('/getAllMovieImages', async (req, res) => {
+  try {
+    const movieList = await Movies.find({}, 'picture'); // Fetch picture fields
+
+    const images = movieList.map(movie => ({
+      _id: movie._id,
+      imageUrl: movie.picture ? `http://localhost:3000/${movie.picture.replace(/\\/g, '/').replace('public/', '')}` : null,
+    })).filter(image => image.imageUrl); // Filter out null imageUrl entries
+    
+    res.json(images);
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    res.status(500).json({ error: 'Failed to fetch images' });
+  }
+});
+
 // Endpoint to fetch series details by ID
 router.get('/getSeriesDetails/:id', async (req, res) => {
   try {
@@ -169,6 +215,22 @@ router.get('/getSeriesDetails/:id', async (req, res) => {
   } catch (error) {
       console.error('Error fetching series details:', error);
       res.status(500).json({ error: 'Failed to fetch series details' });
+  }
+});
+
+// Endpoint to fetch series details by ID
+router.get('/getMovieDetails/:id', async (req, res) => {
+  try {
+      const movieId = req.params.id;
+      const movie = await Movies.findById(movieId);
+
+      if (!movie) {
+          return res.status(404).json({ error: 'movie not found' });
+      }
+      res.json(movie);
+  } catch (error) {
+      console.error('Error fetching movie details:', error);
+      res.status(500).json({ error: 'Failed to fetch movie details' });
   }
 });
 

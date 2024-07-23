@@ -18,6 +18,7 @@ function App() {
         <Route path="/devpage/Movie" element={<Movie/>}/>
         <Route path="/devpage/new-season" element={<NewSeason/>}/>
         <Route path="/devpage/updateseason" element={<UpdateSeason/>}/>
+        <Route path="/devpage/movie" element={<Movie/>}/>
 
       </Routes>
     </BrowserRouter>

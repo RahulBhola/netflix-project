@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FaPlay } from "react-icons/fa";
 import { FaInfoCircle } from "react-icons/fa";
 
-
 const RandomVideo = () => {
   const [videos, setVideos] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -76,10 +75,12 @@ const RandomVideo = () => {
   const { url, poster, name, details } = videos[currentIndex];
 
   return (
-    <div className="relative w-full h-[80vh] flex justify-center items-center cursor-default">
+    <div className="relative w-full h-[85vh] flex justify-center items-center cursor-default">
       {showPoster ? (
-        <div className="w-full h-full">
-          <img src={poster} alt="Video Poster" className="w-full h-full object-cover" />
+        <div className="w-full h-full relative">
+          <img src={poster} alt="Video Poster" className="w-full h-full object-fit" />
+          <div className="absolute bottom-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent"></div>
+          
           <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60">
             <h1 className="text-7xl pl-12 pt-24 text-white uppercase font-bold font-hTitle">{name}</h1>
             <div className='flex space-x-8'>
@@ -97,6 +98,7 @@ const RandomVideo = () => {
         </div>
       ) : (
         <>
+        <div className="absolute bottom-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent"></div>
         <video 
           src={url} 
           poster={poster} 
