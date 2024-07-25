@@ -2,7 +2,7 @@ import React from 'react';
 import Header from "./Header";
 import RandomVideo from './RandomVideo';
 import RecentlyAdded from './RecentlyAdded';
-import Movies from './Movies';
+// import Movies from './Movies';
 
 function Home() {
     return (
@@ -10,7 +10,7 @@ function Home() {
             <Header />
             <RandomVideo />
             <RecentlyAdded />
-            <Movies/>
+            {/* <Movies/> */}
         </div>
     );
 }
