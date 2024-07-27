@@ -6,7 +6,7 @@ import RecentlyAdded from './RecentlyAdded';
 
 function Home() {
     return (
-        <div>
+        <div className='bg-black'>
             <Header />
             <RandomVideo />
             <RecentlyAdded />

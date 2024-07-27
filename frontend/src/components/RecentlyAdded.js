@@ -268,9 +268,9 @@ const RecentlyAdded = () => {
     };   
 
     return (
-        <div className='relative bg-blac'>
+        <div className='relative'>
             <div className='relative  text-white font-bold text-2xl px-12 py-2 -top-20'>Recently Added</div>
-            <div className="relative container mx-auto pb-8 bg-black px-12 -top-20">
+            <div className="relative container mx-auto pb-8 px-12 -top-20">
                 <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                     {images.map((image, index) => (
                         <div key={index} className="rounded-lg cursor-pointer overflow-hidden rounded-lg" 
