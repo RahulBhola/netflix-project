@@ -1,5 +1,8 @@
 Home Page
 ![image](https://github.com/user-attachments/assets/7aaf3e4d-f29e-4023-8f97-5cc48c54a3c8)
+![image](https://github.com/user-attachments/assets/1ccd5aba-83ef-4c2d-9780-22381c2db940)
+![image](https://github.com/user-attachments/assets/0250f2e7-d510-415d-a6e4-9d4763b9dca5)
+
 
 Developer selection Options
 ![image](https://github.com/user-attachments/assets/e0afa549-f0ba-407c-bec6-8428f62716b6)
@@ -15,9 +18,14 @@ Developer selection Options
 3. Update Season Page
 ![image](https://github.com/user-attachments/assets/7d384f77-92a4-4d96-a55b-c28cd3ca4e58)
 
+4. Add New Movie Page
+![image](https://github.com/user-attachments/assets/05629d14-9ab8-4a67-a0d5-5512d9d91087)
+
+
 ![image](https://github.com/user-attachments/assets/a7d35136-71db-4763-8041-e665bf3ce146)
 ![image](https://github.com/user-attachments/assets/d4d24fd7-26a3-415e-9696-6e860d60f484)
 ![image](https://github.com/user-attachments/assets/1e893feb-ce4d-473e-b06f-e99b8b3ad53a)
 ![image](https://github.com/user-attachments/assets/ab0fee57-e39b-419c-b07f-eb7eda74565b)
+
 
 Thank You
