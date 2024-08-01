@@ -26,6 +26,8 @@ const SmileyFace = () => {
 
 
 const Sidebar = ({ isOpen, closeSidebar }) => {
+    const navigate = useNavigate();
+
     return (
         <div className="fixed top-0 left-0 w-1/3 h-screen bg-black text-white z-50">
             <div className="p-4 relative">
@@ -43,12 +45,16 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
                 </div>
                 <ul className="mt-8 ml-12">
                     <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer'> <IoSearch/> <p>Search</p></li>
-                    <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer'> <GoHome /> <p>Home</p></li>
+                    <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer' onClick={()=>navigate("/Home")}> <GoHome /> <p>Home</p></li>
                     <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer'><TiArrowShuffle /> <p>Play Something</p></li>
                     <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer'><AiOutlineRise /> <p>New & Popular</p></li>
                     <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer'><RiComputerLine /> <p>TV Shows</p></li>
                     <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer'><BiMovie /> <p>Movies</p></li>
-                    <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer'><FaPlus/> <p>My List</p></li>
+                    <li className='flex items-center space-x-8 py-3 px-4 text-xl text-zinc-400 hover:text-white hover:font-bold cursor-pointer'
+                        onClick={()=>navigate("/myList")}>
+                        <FaPlus /> 
+                        <p>My List</p>
+                    </li>
                 </ul>
                 <p className='flex items-center space-x-8 py-3 px-4 text-lg text-zinc-400 hover:text-white hover:font-bold cursor-pointer pt-24'>Setting</p>
                 <p className='flex items-center space-x-8 py-3 px-4 text-lg text-zinc-400 hover:text-white hover:font-bold cursor-pointer'>Exit Netflix/Logout</p>

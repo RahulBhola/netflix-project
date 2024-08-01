@@ -5,6 +5,8 @@ const path = require('path');
 const fs = require('fs');
 const Series = require('../models/Series'); 
 const Movies = require('../models/Movies');
+const ListItem = require('../models/ListItems');
+const ListItems = require('../models/ListItems');
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
@@ -303,5 +305,99 @@ router.post('/addSeason', upload.any(), async (req, res) => {
   }
 });
 
+router.post('/addToList', async (req, res) => {
+  try {
+      const listItem = new ListItem(req.body);
+      await listItem.save();
+      res.status(201).json(listItem);
+  } catch (error) {
+      console.error('Error adding to list:', error);
+      res.status(500).json({ error: 'Failed to add to list' });
+  }
+});
+
+router.get('/getListItems', async (req, res) => {
+  try {
+      const listItems = await ListItem.find({});
+      res.status(200).json(listItems);
+  } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch list items', error });
+  }
+});
+
+// Endpoint to fetch series details by ID
+router.get('/getMovieListItem/:id', async (req, res) => {
+  try {
+      const movieId = req.params.id;
+      const movie = await ListItems.findById(movieId);
+
+      if (!movie) {
+          return res.status(404).json({ error: 'movie not found' });
+      }
+      res.json(movie);
+  } catch (error) {
+      console.error('Error fetching movie details:', error);
+      res.status(500).json({ error: 'Failed to fetch movie details' });
+  }
+});
+
+// Endpoint to fetch series details by ID
+router.get('/getListItemSeriesDetails/:id', async (req, res) => {
+  try {
+      const seriesId = req.params.id;
+      const series = await ListItem.findById(seriesId);
+
+      if (!series) {
+          return res.status(404).json({ error: 'Series not found' });
+      }
+      res.json(series);
+  } catch (error) {
+      console.error('Error fetching series details:', error);
+      res.status(500).json({ error: 'Failed to fetch series details' });
+  }
+});
+
+// Endpoint to fetch episodes by season ID
+router.get('/getEpisodesListItem/:seasonId', async (req, res) => {
+  const seasonId = req.params.seasonId;
+
+  try {
+    const series = await ListItem.findOne({ 'seasons._id': seasonId });
+    if (!series) {
+      return res.status(404).json({ error: 'Series not found' });
+    }
+
+    const season = series.seasons.id(seasonId);
+    if (!season) {
+      return res.status(404).json({ error: 'Season not found' });
+    }
+
+    // Map episodes to format video paths correctly
+    const episodesWithUrls = season.episodes.map(episode => ({
+      _id: episode._id,
+      episodeName: episode.episodeName,
+      posterPicture: episode.posterPicture ? `http://localhost:3000/${episode.posterPicture.replace(/\\/g, '/').replace('public/', '')}`: null,
+      episodeVideo: episode.episodeVideo ? `http://localhost:3000/${episode.episodeVideo.replace(/\\/g, '/').replace('public/', '')}` : null,
+      videoDetails: episode.videoDetails,
+    }));
+
+    res.json(episodesWithUrls);
+  } catch (error) {
+    console.error('Error fetching episodes:', error);
+    res.status(500).json({ error: 'Failed to fetch episodes' });
+  }
+});
+
+// backend/routes/listItems.js
+
+router.delete('/deleteListItem/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await ListItem.findByIdAndDelete(id);
+    res.status(200).json({ message: 'List item deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to delete list item', error });
+  }
+});
 
 module.exports = router;

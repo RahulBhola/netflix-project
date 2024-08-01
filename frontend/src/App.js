@@ -1,11 +1,12 @@
 import React from "react";
-import DevPage from "./components/developer/Developer";
+import DevPage from "./pages/developer/Developer";
 import HomePage from "./components/Home";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import UpdateSeason from "./components/developer/UpdateSeason";
-import Movie from "./components/developer/Movie";
-import Series from "./components/developer/Series";
-import NewSeason from "./components/developer/NewSeason";
+import UpdateSeason from "./pages/developer/UpdateSeason";
+import Movie from "./pages/developer/Movie";
+import Series from "./pages/developer/Series";
+import NewSeason from "./pages/developer/NewSeason";
+import List from "./pages/List";
 
 function App() {
 
@@ -19,6 +20,8 @@ function App() {
         <Route path="/devpage/new-season" element={<NewSeason/>}/>
         <Route path="/devpage/updateseason" element={<UpdateSeason/>}/>
         <Route path="/devpage/movie" element={<Movie/>}/>
+        <Route path="/myList" element={<List/>}/>
+
 
       </Routes>
     </BrowserRouter>
