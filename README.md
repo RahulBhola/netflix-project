@@ -1,3 +1,11 @@
+Signup Page
+![image](https://github.com/user-attachments/assets/46fdb69e-c641-4cdd-a1a6-be8ddd8ee5ce)
+
+SignIn Page
+![image](https://github.com/user-attachments/assets/dbfea4e2-a16a-497a-aa7a-07d0dee07a47)
+
+![image](https://github.com/user-attachments/assets/77b0ea59-e765-44ec-b8ef-8a4155e8fd42)
+
 Home Page
 ![image](https://github.com/user-attachments/assets/7aaf3e4d-f29e-4023-8f97-5cc48c54a3c8)
 ![image](https://github.com/user-attachments/assets/0250f2e7-d510-415d-a6e4-9d4763b9dca5)
