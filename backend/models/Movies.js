@@ -13,6 +13,6 @@ const movieSchema = new mongoose.Schema({
     movieVideo: { type: String, required: true },
   });
 
-const Movie = mongoose.model('Movies', movieSchema);
+const Movies = mongoose.model('Movies', movieSchema);
 
-module.exports = Movie;
+module.exports = Movies;

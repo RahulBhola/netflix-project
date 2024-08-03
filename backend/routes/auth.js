@@ -7,7 +7,7 @@ const Series = require('../models/Series');
 const Movies = require('../models/Movies');
 const ListItem = require('../models/ListItems');
 const ListItems = require('../models/ListItems');
-const User = require("../models/User");
+const User = require("../models/users");
 
 const bcrypt = require("bcrypt");
 const { getToken } = require("../utils/helper");
@@ -477,5 +477,24 @@ router.post("/login", async (req, res) => {
   delete userToReturn.password;
   return res.status(200).json(userToReturn);
 });
+
+
+// Route to fetch user profile data
+router.get("/profileDetails", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+      const userId = req.user._id; // Assuming the user ID is available in the request
+      console.log(userId);
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.status(200).json(user);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
 
 module.exports = router;

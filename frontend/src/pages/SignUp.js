@@ -42,7 +42,7 @@ const SignUp = () => {
         style={{ filter: "brightness(40%)" }}
       />
       <div className='absolute inset-0 flex items-center justify-center'>
-        <div className='bg-black bg-opacity-75 p-8 rounded-md text-white w-80'>
+        <div className='bg-black bg-opacity-75 p-8 rounded-md text-white w-1/3'>
           <h2 className='text-3xl mb-6'>Sign Up</h2>
           <input
             id='username'
@@ -76,7 +76,7 @@ const SignUp = () => {
             onChange={(e) => {setConfirmPassword(e.target.value)}}
             className='w-full p-3 mb-4 bg-gray-700 bg-opacity-50 rounded text-white outline-none'
           />
-          <button className='w-full py-3 bg-red-600 rounded text-white font-semibold'
+          <button className='w-full py-3 bg-red-600 rounded text-white font-semibold hover:bg-red-400'
             onClick={(e) => {
               e.preventDefault();
               signUp();
